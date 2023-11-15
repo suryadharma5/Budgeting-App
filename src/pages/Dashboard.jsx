@@ -14,8 +14,8 @@ function Dashboard() {
 
     return (
         <div>
-            {userName}
-            Dashboard
+            <h4>{userName}</h4>
+            h1
         </div>
     )
 }
