@@ -1,12 +1,26 @@
-import React from 'react'
-
 // helper function
 import { fetchData } from '../helpers'
 import { useLoaderData } from 'react-router-dom';
 
+// components
+import Intro from '../components/Intro';
+import { toast } from 'react-toastify';
+
 export function dashboardLoader() {
     const userName = fetchData("userName");
     return { userName }
+}
+
+export async function dashboardAction({ request }) {
+    const data = await request.formData()
+    const formData = Object.fromEntries(data)
+    try {
+        localStorage.setItem('userName', JSON.stringify(formData.userName))
+        console.log(formData)
+        toast.success(`Welcome, ${formData.userName}`)
+    } catch (error) {
+        throw new Error("There was a problem creating your acc")
+    }
 }
 
 function Dashboard() {
@@ -14,8 +28,11 @@ function Dashboard() {
 
     return (
         <div>
-            <h4>{userName}</h4>
-            h1
+            {userName ? (
+                <p>{userName}</p>
+            ) : (
+                <Intro />
+            )}
         </div>
     )
 }
