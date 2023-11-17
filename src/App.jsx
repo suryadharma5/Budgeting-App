@@ -12,12 +12,14 @@ const router = createBrowserRouter([
     element: <Main />,
     // imidiately hit this loader function when we hit '/' route
     loader: mainLoader,
+    errorElement: <Error />,
     children: [
       {
         path: "/",
         element: <Dashboard />,
         loader: dashboardLoader,
-        action: dashboardAction
+        action: dashboardAction,
+        errorElement: <Error />
       },
       {
         path: '/logout',
