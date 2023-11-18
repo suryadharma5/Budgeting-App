@@ -15,19 +15,15 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        path: "/",
+        index: true,
         element: <Dashboard />,
         loader: dashboardLoader,
         action: dashboardAction,
         errorElement: <Error />
       },
       {
-        path: '/logout',
+        path: 'logout',
         action: logoutAction
-      },
-      {
-        path: '*',
-        element: <Error />
       },
     ]
   },

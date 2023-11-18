@@ -18,6 +18,7 @@ export async function dashboardAction({ request }) {
         localStorage.setItem('userName', JSON.stringify(formData.userName))
         toast.success(`Welcome, ${formData.userName}`)
     } catch (error) {
+        console.log("From dashboard", error)
         throw new Error("There was a problem creating your acc")
     }
 }
