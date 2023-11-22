@@ -1,5 +1,5 @@
 // helper function
-import { fetchData } from '../helpers'
+import { fetchData, addBudget } from '../helpers'
 import { useLoaderData } from 'react-router-dom';
 
 // components
@@ -15,13 +15,32 @@ export function dashboardLoader() {
 
 export async function dashboardAction({ request }) {
     const data = await request.formData()
-    const formData = Object.fromEntries(data)
-    try {
-        localStorage.setItem('userName', JSON.stringify(formData.userName))
-        return toast.success(`Welcome, ${formData.userName}`)
-    } catch (error) {
-        console.log("From dashboard", error)
-        throw new Error("There was a problem creating your acc")
+    const { _action, ...values } = Object.fromEntries(data)
+    // console.log(values._ac)
+
+    if (_action === "newUser") {
+        try {
+            localStorage.setItem('userName', JSON.stringify(values.userName))
+            return toast.success(`Welcome, ${values.userName}`)
+        } catch (error) {
+            console.log("From dashboard", error)
+            throw new Error("There was a problem creating your acc")
+        }
+
+    }
+
+    if (_action === 'addBudget') {
+        try {
+            addBudget({
+                name: values.newBudget,
+                amount: values.newBudgetAmount
+            })
+
+            return toast.success("Budget Created")
+        } catch (error) {
+            console.log("From dashboard", error)
+            throw new Error("There was a problem creating your budget")
+        }
     }
 }
 
