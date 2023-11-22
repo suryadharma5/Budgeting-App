@@ -1,5 +1,5 @@
 // helper function
-import { fetchData, addBudget } from '../helpers'
+import { fetchData, addBudget, wait } from '../helpers'
 import { useLoaderData } from 'react-router-dom';
 
 // components
@@ -14,6 +14,8 @@ export function dashboardLoader() {
 }
 
 export async function dashboardAction({ request }) {
+    await wait()
+
     const data = await request.formData()
     const { _action, ...values } = Object.fromEntries(data)
     // console.log(values._ac)
@@ -35,7 +37,6 @@ export async function dashboardAction({ request }) {
                 name: values.newBudget,
                 amount: values.newBudgetAmount
             })
-
             return toast.success("Budget Created")
         } catch (error) {
             console.log("From dashboard", error)
