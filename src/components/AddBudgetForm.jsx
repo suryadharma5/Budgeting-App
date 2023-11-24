@@ -31,13 +31,14 @@ const AddBudgetForm = () => {
                     <label htmlFor="newBudgetAmount">amount</label>
                     <input type="number" name="newBudgetAmount" id="newBudgetAmount" step={0.01} placeholder='e.g., $350' required inputMode='decimal' />
                 </div>
+                {/* ini buat kasi tau ke dashboard data ini berasal dari form mana (di loader function bergunanya) */}
                 <input type="hidden" name='_action' value='addBudget' />
                 <button type='submit' className='btn btn--dark' disabled={isSubmitting}>
                     <span>
                         {isSubmitting
-                            ? "Submitting..."
+                            ? <span>Submitting...</span>
                             : <>
-                                Create Budget
+                                <span>Create Budget</span>
                                 <CurrencyDollarIcon width={20} />
                             </>
                         }
