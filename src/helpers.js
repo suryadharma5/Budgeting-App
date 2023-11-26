@@ -1,4 +1,4 @@
-export const wait = () => new Promise(res => setTimeout(res, Math.random() * 2000))
+export const wait = () => new Promise(res => setTimeout(res, Math.random() * 800))
 
 const generateRandomColor = () => {
     const existingBudgetsLength = fetchData("budgets")?.length ?? 0
@@ -53,6 +53,8 @@ export const calculateSpentBudget = (budgetId) => {
 }
 
 // formatting
+
+export const formatDate = (date) => new Date(date).toLocaleDateString()
 
 export const formatCurrency = (amt) => {
     return amt.toLocaleString(undefined, {
