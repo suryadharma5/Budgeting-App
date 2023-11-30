@@ -1,5 +1,5 @@
 // helper function
-import { fetchData, addBudget, wait, addExpense } from '../helpers'
+import { fetchData, addBudget, wait, addExpense, deleteExpense } from '../helpers'
 import { Link, useLoaderData } from 'react-router-dom';
 
 // components
@@ -59,6 +59,19 @@ export async function dashboardAction({ request }) {
         } catch (error) {
             console.log("From dashboard", error)
             throw new Error("There was a problem creating your expense")
+        }
+    }
+
+    if (_action === 'deleteExpense') {
+        try {
+            deleteExpense({
+                key: "expenses",
+                id: values.expenseId
+            })
+            return toast.success(`Expense deleted!`)
+        } catch (error) {
+            console.log("From dashboard", error)
+            throw new Error("There was a problem deleting your expense")
         }
     }
 }
