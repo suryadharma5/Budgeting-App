@@ -1,9 +1,10 @@
 import React from 'react'
-import { getAllMatchingItems } from '../helpers'
+import { addExpense, deleteExpense, getAllMatchingItems } from '../helpers'
 import { useLoaderData } from 'react-router-dom'
 import BudgetItem from '../components/BudgetItem'
 import AddExpenseForm from '../components/AddExpenseForm'
 import Table from '../components/Table'
+import { toast } from 'react-toastify'
 
 export async function budgetLoader({ params }) {
     const budget = await getAllMatchingItems({
@@ -24,12 +25,45 @@ export async function budgetLoader({ params }) {
     return { budget, expenses }
 }
 
+export async function budgetAction({ request }) {
+    const data = await request.formData()
+    // Object.fromentries() untuk mengubah form data menjadi objek biasa
+    const { _action, ...values } = Object.fromEntries(data)
+
+    if (_action === 'deleteExpense') {
+        try {
+            deleteExpense({
+                key: "expenses",
+                id: values.expenseId
+            })
+            return toast.success(`Expense deleted!`)
+        } catch (error) {
+            console.log("From dashboard", error)
+            throw new Error("There was a problem deleting your expense")
+        }
+    }
+
+    if (_action === 'createExpense') {
+        try {
+            addExpense({
+                name: values.newExpense,
+                amount: values.newExpenseAmount,
+                budgetId: values.newExpenseBudget
+            })
+            return toast.success(`Expense ${values.newExpense} created`)
+        } catch (error) {
+            console.log("From dashboard", error)
+            throw new Error("There was a problem creating your expense")
+        }
+    }
+}
+
 
 const BudgetPage = () => {
     const { budget, expenses } = useLoaderData()
 
     return (
-        <div className='grid-lg'>
+        <div className='grid-lg' style={{ '--accent': budget.color }}>
             <h1 className='h2'>
                 <span className='accent'>{budget.name}</span>
                 Overview
@@ -43,8 +77,8 @@ const BudgetPage = () => {
                     <div className="grid-md">
                         <h2>
                             <span className='accent'>{budget.name}</span>
-                            <Table expenses={expenses} />
                         </h2>
+                        <Table expenses={expenses} showbudget={false} />
                     </div>
                 )
             }
