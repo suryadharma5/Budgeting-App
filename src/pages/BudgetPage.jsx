@@ -65,11 +65,11 @@ const BudgetPage = () => {
     return (
         <div className='grid-lg' style={{ '--accent': budget.color }}>
             <h1 className='h2'>
-                <span className='accent'>{budget.name}</span>
+                <span className='accent'>{budget.name} </span>
                 Overview
             </h1>
             <div className="flex-lg">
-                <BudgetItem budget={budget} />
+                <BudgetItem budget={budget} showDelete={true} />
                 <AddExpenseForm budgets={[budget]} />
             </div>
             {

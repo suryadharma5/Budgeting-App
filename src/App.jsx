@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ExpensesPage, { expenseAction, expenseLoader } from "./pages/ExpensesPage";
 import BudgetPage, { budgetAction, budgetLoader } from "./pages/BudgetPage";
+import { deleteBudget } from "./actions/DeleteBudget";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,13 @@ const router = createBrowserRouter([
         element: <BudgetPage />,
         loader: budgetLoader,
         action: budgetAction,
+        children: [
+          {
+            // ini berarti pathnya apapun parentnya pokoknya akhirnya /delete
+            path: "delete",
+            action: deleteBudget
+          }
+        ]
       },
       {
         path: 'logout',
